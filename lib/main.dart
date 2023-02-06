@@ -1,22 +1,31 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pokedex/navigation/router.dart';
+import 'package:flutter_pokedex/pokedex_app.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
-      title: 'Flutter Pokedex',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+  if (kReleaseMode) {
+    debugPrint = (String? message, {int? wrapWidth}) {};
+  }
+
+  runZonedGuarded(() async {
+    runApp(
+      const ProviderScope(
+        child: PokedexApp(),
       ),
     );
-  }
+  }, (Object error, StackTrace stackTrace) {
+    debugPrint(error.toString());
+    debugPrint(stackTrace.toString());
+  });
 }

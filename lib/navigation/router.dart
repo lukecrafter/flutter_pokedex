@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/feature/home/presentation/home_page.dart';
 import 'package:flutter_pokedex/feature/splash/presentation/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,9 +20,7 @@ final GoRouter router = GoRouter(
       name: 'home',
       path: '/home',
       builder: (BuildContext context, GoRouterState state) {
-        return const Scaffold(
-          backgroundColor: Colors.yellow,
-        );
+        return const HomePage();
       },
       routes: [
         GoRoute(
