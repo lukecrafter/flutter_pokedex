@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/shared/assets.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: const Color.fromRGBO(247, 249, 249, 1.0),
       body: Center(
         child: Image.asset(
-          'assets/images/splash/splash.gif',
+          splashGif,
           fit: BoxFit.cover,
         ),
       ),
