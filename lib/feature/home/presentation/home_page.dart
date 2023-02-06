@@ -99,6 +99,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: PagedGridView<int, PokemonResponse>(
         pagingController: _pagingController,
+        physics: const BouncingScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: 20.0,
           mainAxisSpacing: 20.0,
