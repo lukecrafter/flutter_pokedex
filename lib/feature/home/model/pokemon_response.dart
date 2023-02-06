@@ -1,4 +1,4 @@
-import 'package:flutter_pokedex/shared/pokemon_type_enum.dart';
+import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
 
 class PokemonResponse {
   List<Abilities>? abilities;

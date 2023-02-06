@@ -4,7 +4,7 @@ import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
 import 'package:flutter_pokedex/feature/home/presentation/widget/custom_first_page_exception_indicator.dart';
 import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/shared/assets.dart';
-import 'package:flutter_pokedex/shared/pokemon_type_enum.dart';
+import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
