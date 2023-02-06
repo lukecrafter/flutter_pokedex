@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/navigation/router.dart';
+import 'package:flutter_pokedex/shared/no_scroll_glow_behavior.dart';
 
 class PokedexApp extends StatelessWidget {
   const PokedexApp({super.key});
@@ -9,6 +10,7 @@ class PokedexApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: 'Flutter Pokedex',
+      scrollBehavior: NoScrollGlowBehavior(),
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
