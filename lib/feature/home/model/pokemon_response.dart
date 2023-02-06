@@ -1,3 +1,5 @@
+import 'package:flutter_pokedex/shared/pokemon_type_enum.dart';
+
 class PokemonResponse {
   List<Abilities>? abilities;
   int? baseExperience;
@@ -145,6 +147,10 @@ class PokemonResponse {
     data['weight'] = weight;
     return data;
   }
+
+  PokemonTypes getTypes() {
+    return types?.first.type?.pokemonTypes ?? PokemonTypes.unknown;
+  }
 }
 
 class Abilities {
@@ -223,7 +229,7 @@ class GameIndices {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['game_index'] = gameIndex;
     if (version != null) {
       data['version'] = version!.toJson();
@@ -379,13 +385,13 @@ class PastTypes {
 
 class Types {
   int? slot;
-  Ability? type;
+  Type? type;
 
   Types({this.slot, this.type});
 
   Types.fromJson(Map<String, dynamic> json) {
     slot = json['slot'];
-    type = json['type'] != null ? Ability.fromJson(json['type']) : null;
+    type = json['type'] != null ? Type.fromJson(json['type']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -394,6 +400,25 @@ class Types {
     if (type != null) {
       data['type'] = type!.toJson();
     }
+    return data;
+  }
+}
+
+class Type {
+  PokemonTypes? pokemonTypes;
+  String? url;
+
+  Type({this.pokemonTypes, this.url});
+
+  Type.fromJson(Map<String, dynamic> json) {
+    pokemonTypes = PokemonTypesExtension.fromString(json['name']);
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = pokemonTypes?.name;
+    data['url'] = url;
     return data;
   }
 }
