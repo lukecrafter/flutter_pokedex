@@ -19,7 +19,9 @@ final GoRouter router = GoRouter(
       name: 'home',
       path: '/home',
       builder: (BuildContext context, GoRouterState state) {
-        return Container();
+        return const Scaffold(
+          backgroundColor: Colors.yellow,
+        );
       },
       routes: [
         GoRoute(
