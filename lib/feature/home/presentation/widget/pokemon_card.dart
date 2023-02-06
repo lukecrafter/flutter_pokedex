@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
+import 'package:flutter_pokedex/shared/pokemon_type_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PokemonCard extends ConsumerStatefulWidget {
   final int id;
@@ -87,14 +89,34 @@ class _PokemonCardState extends ConsumerState<PokemonCard> {
                   for (final Types type in widget.types ?? [])
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        '${type.type?.pokemonTypes?.name}',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 20.0,
+                            height: 20.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: type.type?.pokemonTypes?.iconColor(),
+                            ),
+                            padding: const EdgeInsets.all(5.0),
+                            child: SvgPicture.asset(
+                              'assets/images/pokemon/types/${type.type?.pokemonTypes?.name}.svg',
+                              fit: BoxFit.cover,
+                              width: 10.0,
+                              height: 10.0,
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Text(
+                            '${type.type?.pokemonTypes?.name}',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                 ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
+import 'package:flutter_pokedex/feature/home/presentation/widget/custom_first_page_exception_indicator.dart';
 import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/shared/assets.dart';
 import 'package:flutter_pokedex/shared/pokemon_type_enum.dart';
@@ -31,6 +32,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
+      await Future.delayed(const Duration(seconds: 600));
       final List<PokemonResponse> newPokemon =
           await ref.read(homeNotifierProvider).fetchPokemon(
                 limit: _pageSize.toString(),
@@ -67,14 +69,26 @@ class _HomePageState extends ConsumerState<HomePage> {
                     onPlay: (AnimationController controller) =>
                         controller.repeat(),
                   )
-                  .shakeY(
+                  .rotate(
+                    begin: 0.0,
+                    end: 2.0,
+                    alignment: Alignment.center,
+                    delay: const Duration(seconds: 20),
                     duration: const Duration(seconds: 2),
+                  )
+                  .shimmer(
+                    delay: const Duration(seconds: 15),
+                    duration: const Duration(seconds: 2),
+                    color: Colors.white,
+                  )
+                  .shakeY(
                     delay: const Duration(seconds: 10),
+                    duration: const Duration(seconds: 2),
                     hz: 4,
                     amount: 2.5,
                   )
                   .shimmer(
-                    delay: const Duration(seconds: 10),
+                    delay: const Duration(seconds: 5),
                     duration: const Duration(seconds: 2),
                     color: Colors.white,
                   ),
@@ -104,6 +118,13 @@ class _HomePageState extends ConsumerState<HomePage> {
               imageUrl: item.imageUrl,
             );
           },
+          firstPageErrorIndicatorBuilder: (BuildContext context) =>
+              CustomFirstPageExceptionIndicator(
+            title: 'Something went wrong',
+            message: 'The application has encountered an unknown error.\n'
+                'Please try again later.',
+            onTryAgain: () => _fetchPage(0),
+          ),
         ),
       ),
     );

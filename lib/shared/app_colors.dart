@@ -29,4 +29,6 @@ class AppColors {
   static const Color yellow = Color(0xFFF6C747);
   static const Color semiGrey = Color(0xFFbababa);
   static const Color violet = Color(0xD07038F8);
+
+  static const Color primaryColor = Color.fromRGBO(219, 47, 55, 1.0);
 }

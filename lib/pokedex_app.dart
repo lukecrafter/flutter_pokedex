@@ -10,7 +10,7 @@ class PokedexApp extends StatelessWidget {
       routerConfig: router,
       title: 'Flutter Pokedex',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
