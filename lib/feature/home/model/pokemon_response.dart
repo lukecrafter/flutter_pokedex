@@ -147,9 +147,15 @@ class PokemonResponse {
     data['weight'] = weight;
     return data;
   }
+}
 
-  PokemonTypes getTypes() {
+extension PokemonResponseExtension on PokemonResponse {
+  PokemonTypes getMainType() {
     return types?.first.type?.pokemonTypes ?? PokemonTypes.unknown;
+  }
+
+  String get imageUrl {
+    return sprites?.other?.officialArtwork?.frontDefault ?? '';
   }
 }
 

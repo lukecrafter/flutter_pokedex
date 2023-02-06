@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
 import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/shared/assets.dart';
 import 'package:flutter_pokedex/shared/pokemon_type_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import 'package:flutter_pokedex/feature/home/presentation/widget/pokemon_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -59,7 +62,22 @@ class _HomePageState extends ConsumerState<HomePage> {
               SizedBox(
                 width: 40,
                 child: Image.asset(pokeballIcon),
-              ),
+              )
+                  .animate(
+                    onPlay: (AnimationController controller) =>
+                        controller.repeat(),
+                  )
+                  .shakeY(
+                    duration: const Duration(seconds: 2),
+                    delay: const Duration(seconds: 10),
+                    hz: 4,
+                    amount: 2.5,
+                  )
+                  .shimmer(
+                    delay: const Duration(seconds: 10),
+                    duration: const Duration(seconds: 2),
+                    color: Colors.white,
+                  ),
               const SizedBox(width: 10),
               const Text('Pokédex'),
             ],
@@ -74,10 +92,16 @@ class _HomePageState extends ConsumerState<HomePage> {
           crossAxisCount: 2,
           mainAxisExtent: 120.0,
         ),
+        showNewPageProgressIndicatorAsGridChild: false,
+        padding: const EdgeInsets.all(12.0),
         builderDelegate: PagedChildBuilderDelegate<PokemonResponse>(
           itemBuilder: (BuildContext context, PokemonResponse item, int index) {
-            return Container(
-              color: item.getTypes().color,
+            return PokemonCard(
+              id: item.id ?? 0,
+              name: item.name ?? '',
+              types: item.types ?? [],
+              color: item.getMainType().color,
+              imageUrl: item.imageUrl,
             );
           },
         ),

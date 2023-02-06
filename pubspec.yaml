@@ -40,6 +40,8 @@ dependencies:
   shared_preferences: ^2.0.17
   riverpod_annotation: ^1.1.1
   dio: ^4.0.6
+  cached_network_image: ^3.2.3
+  flutter_animate: ^3.1.0
 
 dev_dependencies:
   flutter_test:
