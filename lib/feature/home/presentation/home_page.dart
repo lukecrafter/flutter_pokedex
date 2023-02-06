@@ -32,7 +32,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      await Future.delayed(const Duration(seconds: 600));
       final List<PokemonResponse> newPokemon =
           await ref.read(homeNotifierProvider).fetchPokemon(
                 limit: _pageSize.toString(),
