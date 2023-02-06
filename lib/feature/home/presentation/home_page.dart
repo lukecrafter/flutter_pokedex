@@ -125,6 +125,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                 'Please try again later.',
             onTryAgain: () => _fetchPage(0),
           ),
+          noItemsFoundIndicatorBuilder: (BuildContext context) =>
+              CustomFirstPageExceptionIndicator(
+            title: 'Something went wrong',
+            message: 'The application has encountered an unknown error.\n'
+                'Please try again later.',
+            onTryAgain: () => _fetchPage(0),
+          ),
         ),
       ),
     );
