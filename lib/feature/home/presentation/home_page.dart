@@ -36,8 +36,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     try {
       final List<PokemonResponse> newPokemon =
           await ref.read(homeNotifierProvider).fetchPokemon(
-                limit: _pageSize.toString(),
-                offset: pageKey.toString(),
+                limit: _pageSize,
+                offset: pageKey,
               );
 
       final bool isLastPage = newPokemon.length < _pageSize;

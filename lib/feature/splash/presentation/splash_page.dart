@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
+import 'package:flutter_pokedex/provider/local_storage_provider.dart';
 import 'package:flutter_pokedex/shared/assets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
     final DateTime startTime = DateTime.now();
+
     Future.microtask(() async {
-      // TODO: initialize
-      await Future.delayed(const Duration(seconds: 2), () => null);
+      final List result = await Future.wait([
+        ref.read(storageServiceProvider).getAllPokemon(),
+        Future.delayed(
+          const Duration(seconds: 2),
+        ),
+      ]);
+      ref.read(homeNotifierProvider).addPokemons(result[0]);
+
       GoRouter.of(context).pushReplacementNamed('home');
     });
 
