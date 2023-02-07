@@ -11,6 +11,7 @@ class PokedexApp extends StatelessWidget {
       routerConfig: router,
       title: 'Flutter Pokedex',
       scrollBehavior: NoScrollGlowBehavior(),
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
