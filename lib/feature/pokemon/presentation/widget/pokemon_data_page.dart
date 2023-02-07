@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
-import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_stat_board.dart';
+import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_data_basic_detail.dart';
+import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_data_stat_board.dart';
 import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
 import 'package:flutter_pokedex/shared/extension/pokemon_response_extension.dart';
 import 'package:flutter_pokedex/shared/extension/string_extension.dart';
@@ -64,19 +65,19 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                     ],
                   ),
                 ),
-              ),
-            )
-                .animate()
-                .fadeIn(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeIn,
-                )
-                .moveX(
-                  duration: const Duration(milliseconds: 500),
-                  begin: 10,
-                  end: 0,
-                  curve: Curves.easeIn,
-                ),
+              )
+                  .animate()
+                  .fadeIn(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn,
+                  )
+                  .moveX(
+                    duration: const Duration(milliseconds: 500),
+                    begin: 10,
+                    end: 0,
+                    curve: Curves.easeIn,
+                  ),
+            ),
             Positioned(
               top: 150.0,
               child: SizedBox(
@@ -134,58 +135,9 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Row(
-                            children: [
-                              RichText(
-                                textDirection: TextDirection.ltr,
-                                text: TextSpan(
-                                  text: 'Height: ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: '${widget.pokemon.height}m',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 20.0),
-                              RichText(
-                                textDirection: TextDirection.ltr,
-                                text: TextSpan(
-                                  text: 'Weight: ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: '${widget.pokemon.weight}kg',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          PokemonDataBasicDetail(
+                            height: widget.pokemon.height.toString(),
+                            weight: widget.pokemon.weight.toString(),
                           )
                               .animate()
                               .fadeIn(
@@ -198,7 +150,18 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                                 end: 0,
                                 curve: Curves.easeIn,
                               ),
-                          PokemonStatBoard(pokemon: widget.pokemon)
+                          PokemonDataStatBoard(pokemon: widget.pokemon)
+                              .animate()
+                              .fadeIn(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeIn,
+                              )
+                              .moveY(
+                                duration: const Duration(milliseconds: 500),
+                                begin: 20,
+                                end: 0,
+                                curve: Curves.easeIn,
+                              ),
                         ],
                       ),
                     )

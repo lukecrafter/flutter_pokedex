@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
 import 'package:flutter_pokedex/feature/pokemon/model/pokemon_stat.dart';
 import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_data_stat.dart';
@@ -8,10 +7,10 @@ import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
 import 'package:flutter_pokedex/shared/extension/pokemon_response_extension.dart';
 import 'package:flutter_pokedex/shared/extension/string_extension.dart';
 
-class PokemonStatBoard extends StatelessWidget {
+class PokemonDataStatBoard extends StatelessWidget {
   final PokemonResponse pokemon;
 
-  const PokemonStatBoard({
+  const PokemonDataStatBoard({
     super.key,
     required this.pokemon,
   });
@@ -44,17 +43,6 @@ class PokemonStatBoard extends StatelessWidget {
           ],
         ),
       ),
-    )
-        .animate()
-        .fadeIn(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeIn,
-        )
-        .moveY(
-          duration: const Duration(milliseconds: 500),
-          begin: 20,
-          end: 0,
-          curve: Curves.easeIn,
-        );
+    );
   }
 }
