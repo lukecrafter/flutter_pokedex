@@ -30,35 +30,4 @@ class AsyncPokemon extends _$AsyncPokemon {
     // Load initial todo list from the remote repository
     return _fetchPokemon(id);
   }
-
-  // Future<void> addTodo(Todo todo) async {
-  //   // Set the state to loading
-  //   state = const AsyncValue.loading();
-  //   // Add the new todo and reload the todo list from the remote repository
-  //   state = await AsyncValue.guard(() async {
-  //     await http.post('api/todos', todo.toJson());
-  //     return _fetchTodo();
-  //   });
-  // }
-
-  // // Let's allow removing todos
-  // Future<void> removeTodo(String todoId) async {
-  //   state = const AsyncValue.loading();
-  //   state = await AsyncValue.guard(() async {
-  //     await http.delete('api/todos/$todoId');
-  //     return _fetchTodo();
-  //   });
-  // }
-
-  // // Let's mark a todo as completed
-  // Future<void> toggle(String todoId) async {
-  //   state = const AsyncValue.loading();
-  //   state = await AsyncValue.guard(() async {
-  //     await http.patch(
-  //       'api/todos/$todoId',
-  //       <String, dynamic>{'completed': true},
-  //     );
-  //     return _fetchTodo();
-  //   });
-  // }
 }

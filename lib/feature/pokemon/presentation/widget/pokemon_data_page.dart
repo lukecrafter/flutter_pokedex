@@ -78,7 +78,7 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                             onTap: () => GoRouter.of(context).pop(),
                             child: Icon(
                               Icons.arrow_back,
-                              color: AppColors.grey.withOpacity(0.6),
+                              color: Colors.black87.withOpacity(0.6),
                             ),
                           ),
                           secondChild: Text(

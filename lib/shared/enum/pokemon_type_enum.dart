@@ -24,7 +24,6 @@ enum PokemonTypes {
   unknown,
 }
 
-// create extensions for the enum to get the type by string
 extension PokemonTypesExtension on PokemonTypes {
   String get name => toString().split('.').last;
 
