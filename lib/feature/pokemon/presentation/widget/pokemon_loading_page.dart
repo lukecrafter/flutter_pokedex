@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
 import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
+import 'package:flutter_pokedex/shared/extension/pokemon_response_extension.dart';
 import 'package:flutter_pokedex/shared/util/pokemon_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

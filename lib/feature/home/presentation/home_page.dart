@@ -5,6 +5,7 @@ import 'package:flutter_pokedex/feature/home/presentation/widget/custom_first_pa
 import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/shared/assets.dart';
 import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
+import 'package:flutter_pokedex/shared/extension/pokemon_response_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
+import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_stat_board.dart';
 import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
+import 'package:flutter_pokedex/shared/extension/pokemon_response_extension.dart';
+import 'package:flutter_pokedex/shared/extension/string_extension.dart';
 import 'package:flutter_pokedex/shared/util/pokemon_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -51,7 +54,7 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                                 ),
                       ),
                       Text(
-                        '${'${widget.pokemon.name}'.characters.first.toUpperCase()}${'${widget.pokemon.name}'.substring(1)}',
+                        '${widget.pokemon.name}'.firstLetterToUpperCase(),
                         style:
                             Theme.of(context).textTheme.headlineLarge!.copyWith(
                                   color: Colors.white,
@@ -195,7 +198,7 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                                 end: 0,
                                 curve: Curves.easeIn,
                               ),
-                          // Todo: add stat here
+                          PokemonStatBoard(pokemon: widget.pokemon)
                         ],
                       ),
                     )
@@ -204,13 +207,16 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
               ),
             ),
             Positioned.fromRelativeRect(
-              rect: const RelativeRect.fromLTRB(30.0, 150, 30.0, 0),
+              rect: const RelativeRect.fromLTRB(30.0, 300, 30.0, 0),
               child: CachedNetworkImage(
                 imageUrl: getPokemonOfficialImageUrl(widget.id.toString()),
                 fit: BoxFit.contain,
                 errorWidget: (BuildContext context, String url, error) =>
                     Container(),
-              ),
+              ).animate().fadeIn(
+                    duration: const Duration(milliseconds: 1000),
+                    curve: Curves.easeInOut,
+                  ),
             ),
           ],
         ),

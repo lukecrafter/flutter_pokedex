@@ -150,16 +150,6 @@ class PokemonResponse {
   }
 }
 
-extension PokemonResponseExtension on PokemonResponse {
-  PokemonTypes getMainType() {
-    return types?.first.type?.pokemonTypes ?? PokemonTypes.unknown;
-  }
-
-  String get imageUrl {
-    return sprites?.other?.officialArtwork?.frontDefault ?? '';
-  }
-}
-
 class Abilities {
   Ability? ability;
   bool? isHidden;
