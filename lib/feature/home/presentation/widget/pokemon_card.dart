@@ -126,22 +126,11 @@ class _PokemonCardState extends ConsumerState<PokemonCard> {
           Positioned(
             right: 0,
             bottom: 0,
-            child: Hero(
-              tag: 'pokemon-${widget.id}',
+            child: SizedBox(
+              width: 80.0,
+              height: 80.0,
               child: CachedNetworkImage(
                 imageUrl: widget.imageUrl,
-                imageBuilder: (
-                  BuildContext context,
-                  ImageProvider<Object> imageProvider,
-                ) {
-                  return SizedBox(
-                    width: 80.0,
-                    child: Image(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                },
                 fit: BoxFit.cover,
                 errorWidget: (BuildContext context, String url, error) =>
                     Container(),

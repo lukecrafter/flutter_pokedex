@@ -29,17 +29,14 @@ class PokemonLoadingPage extends ConsumerWidget {
           ),
           Positioned.fromRelativeRect(
             rect: const RelativeRect.fromLTRB(30.0, 0, 30, 0),
-            child: Hero(
-              tag: 'pokemon-$id',
-              child: SizedBox(
-                width: 80.0,
-                height: 80.0,
-                child: CachedNetworkImage(
-                  imageUrl: getPokemonOfficialImageUrl(id.toString()),
-                  fit: BoxFit.contain,
-                  errorWidget: (BuildContext context, String url, error) =>
-                      Container(),
-                ),
+            child: SizedBox(
+              width: 80.0,
+              height: 80.0,
+              child: CachedNetworkImage(
+                imageUrl: getPokemonOfficialImageUrl(id.toString()),
+                fit: BoxFit.contain,
+                errorWidget: (BuildContext context, String url, error) =>
+                    Container(),
               ),
             ),
           ),
