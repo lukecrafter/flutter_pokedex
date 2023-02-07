@@ -3,16 +3,16 @@ import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
 import 'package:flutter_pokedex/feature/home/service/home_service.dart';
 
 class HomeRepository {
-  final HomeServicesImpl _pokedexServices;
+  final HomeServicesImpl _homeRepo;
 
-  HomeRepository(this._pokedexServices);
+  HomeRepository(this._homeRepo);
 
   Future<List<PokemonListResponseResult>?> getPokemonList({
     String? limit = '0',
     String? offset = '0',
   }) async {
     try {
-      return await _pokedexServices.getPokemonList(
+      return await _homeRepo.getPokemonList(
         limit: limit,
         offset: offset,
       );
@@ -23,7 +23,7 @@ class HomeRepository {
 
   Future<PokemonResponse?> getPokemonByUrl({required String url}) async {
     try {
-      return await _pokedexServices.getPokemonByUrl(url: url);
+      return await _homeRepo.getPokemonByUrl(url: url);
     } catch (e) {
       return null;
     }
