@@ -11,6 +11,7 @@ import 'package:flutter_pokedex/shared/extension/string_extension.dart';
 import 'package:flutter_pokedex/shared/util/pokemon_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class PokemonDataPage extends ConsumerStatefulWidget {
   final String id;
@@ -47,6 +48,22 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
               width: double.infinity,
               height: double.infinity,
             ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 10.0,
+                  right: 10.0,
+                ),
+                child: Text(
+                  '# ${widget.pokemon.id}',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ),
+            ).animate(target: _isClicked ? 1 : 0).fadeOut(),
             Positioned(
               top: 0,
               child: SizedBox(
@@ -56,21 +73,41 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '# ${widget.pokemon.id}',
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                      AnimatedCrossFade(
+                        crossFadeState: _isClicked
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                        duration: const Duration(milliseconds: 500),
+                        firstChild: GestureDetector(
+                          onTap: () => GoRouter.of(context).pop(),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: AppColors.grey.withOpacity(0.6),
+                          ),
+                        ),
+                        secondChild: Text(
+                          '# ${widget.pokemon.id}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
                       ),
                       Text(
                         '${widget.pokemon.name}'.firstLetterToUpperCase(),
-                        style:
-                            Theme.of(context).textTheme.headlineLarge!.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
                       ),
                       Container(
                         clipBehavior: Clip.hardEdge,
@@ -122,6 +159,97 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                             duration: const Duration(milliseconds: 200),
                             curve: Curves.easeIn,
                           ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RotatedBox(
+                            quarterTurns: 3,
+                            child: RichText(
+                              textDirection: TextDirection.ltr,
+                              text: TextSpan(
+                                text: 'Species: ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '${widget.pokemon.species?.name}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                              .animate()
+                              .fadeIn(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeIn,
+                              )
+                              .moveY(
+                                duration: const Duration(milliseconds: 500),
+                                begin: 10,
+                                end: 0,
+                                curve: Curves.easeIn,
+                              ),
+                          const SizedBox(
+                            width: 30.0,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                PokemonDataBasicDetail(
+                                  height: widget.pokemon.height.toString(),
+                                  weight: widget.pokemon.weight.toString(),
+                                )
+                                    .animate()
+                                    .fadeIn(
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.easeIn,
+                                    )
+                                    .moveX(
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      begin: 10,
+                                      end: 0,
+                                      curve: Curves.easeIn,
+                                    ),
+                                PokemonDataStatBoard(pokemon: widget.pokemon)
+                                    .animate()
+                                    .fadeIn(
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.easeIn,
+                                    )
+                                    .moveY(
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      begin: 20,
+                                      end: 0,
+                                      curve: Curves.easeIn,
+                                    ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ).animate(target: _isClicked ? 1.0 : 0.0).fadeOut(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeIn,
+                          ),
                     ],
                   ),
                 ),
@@ -138,100 +266,6 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                     curve: Curves.easeIn,
                   ),
             ),
-            Positioned(
-              top: 150.0,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RotatedBox(
-                      quarterTurns: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: RichText(
-                          textDirection: TextDirection.ltr,
-                          text: TextSpan(
-                            text: 'Species: ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: '${widget.pokemon.species?.name}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                        .animate()
-                        .fadeIn(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeIn,
-                        )
-                        .moveY(
-                          duration: const Duration(milliseconds: 500),
-                          begin: 10,
-                          end: 0,
-                          curve: Curves.easeIn,
-                        ),
-                    const SizedBox(
-                      width: 30.0,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          PokemonDataBasicDetail(
-                            height: widget.pokemon.height.toString(),
-                            weight: widget.pokemon.weight.toString(),
-                          )
-                              .animate()
-                              .fadeIn(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeIn,
-                              )
-                              .moveX(
-                                duration: const Duration(milliseconds: 500),
-                                begin: 10,
-                                end: 0,
-                                curve: Curves.easeIn,
-                              ),
-                          PokemonDataStatBoard(pokemon: widget.pokemon)
-                              .animate()
-                              .fadeIn(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeIn,
-                              )
-                              .moveY(
-                                duration: const Duration(milliseconds: 500),
-                                begin: 20,
-                                end: 0,
-                                curve: Curves.easeIn,
-                              ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ).animate(target: _isClicked ? 1.0 : 0.0).fadeOut(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeIn,
-                ),
             Positioned.fromRelativeRect(
               rect: const RelativeRect.fromLTRB(30.0, 300, 30.0, 0),
               child: GestureDetector(
