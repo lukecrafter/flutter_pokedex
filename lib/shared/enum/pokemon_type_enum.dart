@@ -26,13 +26,6 @@ enum PokemonTypes {
 
 // create extensions for the enum to get the type by string
 extension PokemonTypesExtension on PokemonTypes {
-  static PokemonTypes fromString(String type) {
-    return PokemonTypes.values.firstWhere(
-      (PokemonTypes e) => e.toString().split('.').last == type,
-      orElse: () => PokemonTypes.unknown,
-    );
-  }
-
   String get name => toString().split('.').last;
 
   Color iconColor() {

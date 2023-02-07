@@ -1,4 +1,5 @@
 import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
+import 'package:flutter_pokedex/shared/util/pokemon_util.dart';
 
 class PokemonResponse {
   List<Abilities>? abilities;
@@ -417,7 +418,7 @@ class Type {
   Type({this.pokemonTypes, this.url});
 
   Type.fromJson(Map<String, dynamic> json) {
-    pokemonTypes = PokemonTypesExtension.fromString(json['name']);
+    pokemonTypes = getPokemonTypes(json['name']);
     url = json['url'];
   }
 

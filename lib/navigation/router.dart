@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/feature/pokemon/presentation/pokemon_page.dart';
 import 'package:flutter_pokedex/feature/home/presentation/home_page.dart';
 import 'package:flutter_pokedex/feature/splash/presentation/splash_page.dart';
 import 'package:go_router/go_router.dart';
@@ -25,9 +26,11 @@ final GoRouter router = GoRouter(
       routes: [
         GoRoute(
           name: 'pokemon',
-          path: 'pokemon',
+          path: 'pokemon/:id',
           builder: (BuildContext context, GoRouterState state) {
-            return Container();
+            return PokemonPage(
+              id: state.params['id']!,
+            );
           },
         ),
       ],

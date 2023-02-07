@@ -37,4 +37,11 @@ class HomeNotifier extends StateNotifier<List<PokemonResponse>> {
   void addPokemons(List<PokemonResponse> pokemon) {
     state = [...state, ...pokemon];
   }
+
+  PokemonResponse? getPokemonById({required int id}) {
+    final int index = state.indexWhere(
+      (PokemonResponse pokemon) => pokemon.id == id,
+    );
+    return index != -1 ? state[index] : null;
+  }
 }

@@ -86,7 +86,7 @@ class _PokemonCardState extends ConsumerState<PokemonCard> {
                       ),
                     ],
                   ),
-                  for (final Types type in widget.types ?? [])
+                  for (final Types type in widget.types)
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Row(
@@ -126,7 +126,8 @@ class _PokemonCardState extends ConsumerState<PokemonCard> {
           Positioned(
             right: 0,
             bottom: 0,
-            child: SizedBox(
+            child: Hero(
+              tag: 'pokemon-${widget.id}',
               child: CachedNetworkImage(
                 imageUrl: widget.imageUrl,
                 imageBuilder: (

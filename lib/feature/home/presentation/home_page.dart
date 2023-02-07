@@ -6,6 +6,7 @@ import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/shared/assets.dart';
 import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:flutter_pokedex/feature/home/presentation/widget/pokemon_card.dart';
@@ -109,15 +110,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         showNewPageProgressIndicatorAsGridChild: false,
         padding: const EdgeInsets.all(12.0),
         builderDelegate: PagedChildBuilderDelegate<PokemonResponse>(
-          itemBuilder: (BuildContext context, PokemonResponse item, int index) {
-            return PokemonCard(
-              id: item.id ?? 0,
-              name: item.name ?? '',
-              types: item.types ?? [],
-              color: item.getMainType().color,
-              imageUrl: item.imageUrl,
-            );
-          },
           firstPageErrorIndicatorBuilder: (BuildContext context) =>
               CustomFirstPageExceptionIndicator(
             title: 'Something went wrong',
@@ -132,6 +124,25 @@ class _HomePageState extends ConsumerState<HomePage> {
                 'Please try again later.',
             onTryAgain: () => _fetchPage(0),
           ),
+          itemBuilder: (BuildContext context, PokemonResponse item, int index) {
+            return GestureDetector(
+              onTap: () {
+                GoRouter.of(context).pushNamed(
+                  'pokemon',
+                  params: {
+                    'id': (item.id ?? '-1').toString(),
+                  },
+                );
+              },
+              child: PokemonCard(
+                id: item.id ?? 0,
+                name: item.name ?? '',
+                types: item.types ?? [],
+                color: item.getMainType().color,
+                imageUrl: item.imageUrl,
+              ),
+            );
+          },
         ),
       ),
     );
