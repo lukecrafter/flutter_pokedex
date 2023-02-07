@@ -4,11 +4,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
 import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_data_basic_detail.dart';
 import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_data_stat_board.dart';
+import 'package:flutter_pokedex/shared/app_colors.dart';
 import 'package:flutter_pokedex/shared/enum/pokemon_type_enum.dart';
 import 'package:flutter_pokedex/shared/extension/pokemon_response_extension.dart';
 import 'package:flutter_pokedex/shared/extension/string_extension.dart';
 import 'package:flutter_pokedex/shared/util/pokemon_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PokemonDataPage extends ConsumerStatefulWidget {
   final String id;
@@ -26,6 +28,14 @@ class PokemonDataPage extends ConsumerStatefulWidget {
 }
 
 class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
+  bool _isClicked = false;
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +54,7 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         '# ${widget.pokemon.id}',
@@ -62,6 +72,56 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                                   fontWeight: FontWeight.w800,
                                 ),
                       ),
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: ShapeDecoration(
+                          shape: const StadiumBorder(),
+                          color: AppColors.grey.withOpacity(0.6),
+                        ),
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            for (final Types type in widget.pokemon.types ?? [])
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 20.0,
+                                      height: 20.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: type.type?.pokemonTypes
+                                            ?.iconColor(),
+                                      ),
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: SvgPicture.asset(
+                                        'assets/images/pokemon/types/${type.type?.pokemonTypes?.name}.svg',
+                                        fit: BoxFit.cover,
+                                        width: 10.0,
+                                        height: 10.0,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5.0),
+                                    Text(
+                                      '${type.type?.pokemonTypes?.name}',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      ).animate(target: _isClicked ? 1.0 : 0.0).fadeOut(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeIn,
+                          ),
                     ],
                   ),
                 ),
@@ -168,18 +228,24 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                   ],
                 ),
               ),
-            ),
+            ).animate(target: _isClicked ? 1.0 : 0.0).fadeOut(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeIn,
+                ),
             Positioned.fromRelativeRect(
               rect: const RelativeRect.fromLTRB(30.0, 300, 30.0, 0),
-              child: CachedNetworkImage(
-                imageUrl: getPokemonOfficialImageUrl(widget.id.toString()),
-                fit: BoxFit.contain,
-                errorWidget: (BuildContext context, String url, error) =>
-                    Container(),
-              ).animate().fadeIn(
-                    duration: const Duration(milliseconds: 1000),
-                    curve: Curves.easeInOut,
-                  ),
+              child: GestureDetector(
+                onTap: () => setState(() => _isClicked = !_isClicked),
+                child: CachedNetworkImage(
+                  imageUrl: getPokemonOfficialImageUrl(widget.id.toString()),
+                  fit: BoxFit.contain,
+                  errorWidget: (BuildContext context, String url, error) =>
+                      Container(),
+                ).animate().fadeIn(
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.easeInOut,
+                    ),
+              ),
             ),
           ],
         ),
