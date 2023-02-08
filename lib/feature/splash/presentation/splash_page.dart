@@ -16,13 +16,13 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
     Future.microtask(() async {
+      final GoRouter router = GoRouter.of(context);
       final List result = await Future.wait([
         ref.read(storageServiceProvider).getAllPokemon(),
         Future.delayed(const Duration(seconds: 2)),
       ]);
       ref.read(homeNotifierProvider).addPokemons(result[0]);
-
-      GoRouter.of(context).pushReplacementNamed('home');
+      router.pushReplacementNamed('home');
     });
 
     super.initState();

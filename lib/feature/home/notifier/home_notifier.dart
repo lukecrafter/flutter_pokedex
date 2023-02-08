@@ -72,6 +72,10 @@ class HomeNotifier extends StateNotifier<List<PokemonResponse>> {
     state = [...state, ...pokemon];
   }
 
+  PokemonResponse getLastPokemonInList() {
+    return state.last;
+  }
+
   PokemonResponse? getPokemonById({required int id}) {
     final int index = state.indexWhere(
       (PokemonResponse pokemon) => pokemon.id == id,

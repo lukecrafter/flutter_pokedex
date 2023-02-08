@@ -269,14 +269,16 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                 child: Dismissible(
                   key: ValueKey(widget.id),
                   resizeDuration: null,
-                  onUpdate: (DismissUpdateDetails deatils) {},
                   confirmDismiss: (DismissDirection direction) async {
                     if (direction == DismissDirection.endToStart) {
                       if (int.parse(widget.id) == 1) {
                         return false;
                       }
                     } else if (direction == DismissDirection.startToEnd) {
-                      return !(ref.read(homeNotifierProvider).state.last.id ==
+                      return !(ref
+                              .read(homeNotifierProvider)
+                              .getLastPokemonInList()
+                              .id ==
                           int.parse(widget.id));
                     }
                     return true;
