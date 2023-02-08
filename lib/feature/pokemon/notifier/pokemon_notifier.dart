@@ -1,6 +1,7 @@
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
 import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/feature/pokemon/provider/pokemon_provider.dart';
+import 'package:flutter_pokedex/provider/local_storage_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pokemon_notifier.g.dart';
@@ -17,6 +18,8 @@ class AsyncPokemon extends _$AsyncPokemon {
     try {
       final PokemonResponse response =
           await ref.read(pokemonRepositoryProvider).getPokemonById(id: id);
+      ref.read(storageServiceProvider).setPokemonList([response]);
+      ref.read(homeNotifierProvider).addPokemons([response]);
 
       return response;
     } catch (e) {

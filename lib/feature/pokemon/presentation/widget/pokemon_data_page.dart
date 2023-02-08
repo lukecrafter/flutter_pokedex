@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_pokedex/feature/home/model/pokemon_response.dart';
+import 'package:flutter_pokedex/feature/home/provider/home_provider.dart';
 import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_data_basic_detail.dart';
 import 'package:flutter_pokedex/feature/pokemon/presentation/widget/pokemon_data_stat_board.dart';
 import 'package:flutter_pokedex/shared/app_colors.dart';
@@ -265,11 +266,46 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
               ),
               Positioned.fromRelativeRect(
                 rect: const RelativeRect.fromLTRB(30.0, 300, 30.0, 0),
-                child: CachedNetworkImage(
-                  imageUrl: getPokemonOfficialImageUrl(widget.id.toString()),
-                  fit: BoxFit.contain,
-                  errorWidget: (BuildContext context, String url, error) =>
-                      Container(),
+                child: Dismissible(
+                  key: ValueKey(widget.id),
+                  resizeDuration: null,
+                  onUpdate: (DismissUpdateDetails deatils) {},
+                  confirmDismiss: (DismissDirection direction) async {
+                    if (direction == DismissDirection.endToStart) {
+                      if (int.parse(widget.id) == 1) {
+                        return false;
+                      }
+                    } else if (direction == DismissDirection.startToEnd) {
+                      return !(ref.read(homeNotifierProvider).state.last.id ==
+                          int.parse(widget.id));
+                    }
+                    return true;
+                  },
+                  onDismissed: (DismissDirection direction) {
+                    if (direction == DismissDirection.endToStart) {
+                      GoRouter.of(context).goNamed(
+                        'pokemon',
+                        params: {
+                          'id': ((int.parse(widget.id) - 1).toString())
+                              .toString(),
+                        },
+                      );
+                    } else if (direction == DismissDirection.startToEnd) {
+                      GoRouter.of(context).goNamed(
+                        'pokemon',
+                        params: {
+                          'id': ((int.parse(widget.id) + 1).toString())
+                              .toString(),
+                        },
+                      );
+                    }
+                  },
+                  child: CachedNetworkImage(
+                    imageUrl: getPokemonOfficialImageUrl(widget.id.toString()),
+                    fit: BoxFit.contain,
+                    errorWidget: (BuildContext context, String url, error) =>
+                        Container(),
+                  ),
                 ).animate().fadeIn(
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.easeInOut,

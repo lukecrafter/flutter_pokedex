@@ -55,7 +55,6 @@ class HomeNotifier extends StateNotifier<List<PokemonResponse>> {
     final List<PokemonResponse> newPokemonList = [];
 
     newPokemonList.addAll(result.whereType<PokemonResponse>());
-
     storageService.setPokemonList(newPokemonList);
 
     addPokemons(newPokemonList);

@@ -15,14 +15,10 @@ class SplashPage extends ConsumerStatefulWidget {
 class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
-    final DateTime startTime = DateTime.now();
-
     Future.microtask(() async {
       final List result = await Future.wait([
         ref.read(storageServiceProvider).getAllPokemon(),
-        Future.delayed(
-          const Duration(seconds: 2),
-        ),
+        Future.delayed(const Duration(seconds: 2)),
       ]);
       ref.read(homeNotifierProvider).addPokemons(result[0]);
 
