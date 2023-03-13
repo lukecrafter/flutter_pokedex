@@ -285,7 +285,7 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                   },
                   onDismissed: (DismissDirection direction) {
                     if (direction == DismissDirection.endToStart) {
-                      GoRouter.of(context).goNamed(
+                      GoRouter.of(context).pushReplacementNamed(
                         'pokemon',
                         params: {
                           'id': ((int.parse(widget.id) - 1).toString())
@@ -293,7 +293,7 @@ class _PokemonDataPageState extends ConsumerState<PokemonDataPage> {
                         },
                       );
                     } else if (direction == DismissDirection.startToEnd) {
-                      GoRouter.of(context).goNamed(
+                      GoRouter.of(context).pushReplacementNamed(
                         'pokemon',
                         params: {
                           'id': ((int.parse(widget.id) + 1).toString())
